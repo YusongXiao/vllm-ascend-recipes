@@ -344,7 +344,7 @@ scenarios:
 
           The HTTP status is 200 and the JSON response contains a `choices` field with generated text.
 
-          For local video inputs, mount the host media directory to `/media` in the container, replace `...` with the video filename, and send a request with a `file:///media/...` URL:
+          For a video request, use a video URL that the server can access. The example below uses a public sample video; for local files, mount the host media directory to `/media` and use a `file:///media/...` URL instead:
 
           ```bash
           curl http://<server_ip>:<port>/v1/chat/completions \
@@ -353,7 +353,7 @@ scenarios:
               "model": "qwen3-vl-30b",
               "messages": [
                 {"role": "user", "content": [
-                  {"type": "video_url", "video_url": {"url": "file:///media/..."}},
+                  {"type": "video_url", "video_url": {"url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Omni/demo/draw.mp4"}},
                   {"type": "text", "text": "Describe this video."}
                 ]}
               ],

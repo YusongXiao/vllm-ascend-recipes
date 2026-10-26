@@ -344,7 +344,7 @@ scenarios:
 
           HTTP 状态码应为 200，JSON 响应中包含带生成文本的 `choices` 字段。
 
-          如需本地视频输入，请将宿主机媒体目录挂载到容器内的 `/media`，将 `...` 替换为视频文件名，并使用 `file:///media/...` 形式的 URL 发送请求：
+          视频请求可使用服务端能够访问的视频 URL。下面的示例使用公开示例视频；如需本地文件，请将宿主机媒体目录挂载到容器内的 `/media`，并改用 `file:///media/...` 形式的 URL：
 
           ```bash
           curl http://<server_ip>:<port>/v1/chat/completions \
@@ -353,7 +353,7 @@ scenarios:
               "model": "qwen3-vl-30b",
               "messages": [
                 {"role": "user", "content": [
-                  {"type": "video_url", "video_url": {"url": "file:///media/..."}},
+                  {"type": "video_url", "video_url": {"url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Omni/demo/draw.mp4"}},
                   {"type": "text", "text": "Describe this video."}
                 ]}
               ],
