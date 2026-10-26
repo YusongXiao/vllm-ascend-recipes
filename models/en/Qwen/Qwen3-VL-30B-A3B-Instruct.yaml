@@ -344,7 +344,7 @@ scenarios:
 
           The HTTP status is 200 and the JSON response contains a `choices` field with generated text.
 
-          For local video inputs, mount the host media directory to `/media` in the container and send a request with a `file:///media/...` URL:
+          For local video inputs, mount the host media directory to `/media` in the container, replace `...` with the video filename, and send a request with a `file:///media/...` URL:
 
           ```bash
           curl http://<server_ip>:<port>/v1/chat/completions \
@@ -353,7 +353,7 @@ scenarios:
               "model": "qwen3-vl-30b",
               "messages": [
                 {"role": "user", "content": [
-                  {"type": "video_url", "video_url": {"url": "file:///media/test.mp4"}},
+                  {"type": "video_url", "video_url": {"url": "file:///media/..."}},
                   {"type": "text", "text": "Describe this video."}
                 ]}
               ],
@@ -518,7 +518,7 @@ faq: |-
 
   **The service reserves more memory than expected for image-only requests.** Allowing video inputs can reserve memory for long visual embeddings and preprocessing paths. Use `--limit-mm-per-prompt.video 0` for image-only serving and enable video only when the workload needs it.
 
-  **A video request fails with a local file path.** The server can only access local media paths that are mounted into the container and allowed by `--allowed-local-media-path`. Mount the host media directory to `/media`, start the server with `--allowed-local-media-path /media`, and use a request URL like `file:///media/test.mp4`.
+  **A video request fails with a local file path.** The server can only access local media paths that are mounted into the container and allowed by `--allowed-local-media-path`. Mount the host media directory to `/media`, start the server with `--allowed-local-media-path /media`, and use a request URL like `file:///media/...` (replace `...` with the video filename).
 
   **Enabling prefix caching does not improve performance.** Prefix caching only helps when requests share reusable prefixes. Unique images, unique videos, or random prompts may add memory pressure without visible gains. Enable prefix caching for repeated-prefix workloads; for random benchmarks or memory-constrained video workloads, compare with prefix caching disabled.
 

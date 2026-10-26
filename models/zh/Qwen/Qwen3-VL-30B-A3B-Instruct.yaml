@@ -344,7 +344,7 @@ scenarios:
 
           HTTP 状态码应为 200，JSON 响应中包含带生成文本的 `choices` 字段。
 
-          如需本地视频输入，请将宿主机媒体目录挂载到容器内的 `/media`，并使用 `file:///media/...` 形式的 URL 发送请求：
+          如需本地视频输入，请将宿主机媒体目录挂载到容器内的 `/media`，将 `...` 替换为视频文件名，并使用 `file:///media/...` 形式的 URL 发送请求：
 
           ```bash
           curl http://<server_ip>:<port>/v1/chat/completions \
@@ -353,7 +353,7 @@ scenarios:
               "model": "qwen3-vl-30b",
               "messages": [
                 {"role": "user", "content": [
-                  {"type": "video_url", "video_url": {"url": "file:///media/test.mp4"}},
+                  {"type": "video_url", "video_url": {"url": "file:///media/..."}},
                   {"type": "text", "text": "Describe this video."}
                 ]}
               ],
@@ -518,7 +518,7 @@ faq: |-
 
   **仅含图像的请求也预留了超出预期的内存。** 允许视频输入会为较长的视觉嵌入和预处理路径预留内存。图像专用服务请使用 `--limit-mm-per-prompt.video 0`，仅在工作负载需要时启用视频。
 
-  **本地文件路径的视频请求失败。** 服务只能访问挂载到容器内且被 `--allowed-local-media-path` 允许的本地媒体路径。请将宿主机媒体目录挂载到 `/media`，启动服务时带上 `--allowed-local-media-path /media`，并在请求中使用 `file:///media/test.mp4` 形式的 URL。
+  **本地文件路径的视频请求失败。** 服务只能访问挂载到容器内且被 `--allowed-local-media-path` 允许的本地媒体路径。请将宿主机媒体目录挂载到 `/media`，启动服务时带上 `--allowed-local-media-path /media`，并在请求中使用 `file:///media/...` 形式的 URL（将 `...` 替换为视频文件名）。
 
   **开启前缀缓存未带来性能提升。** 前缀缓存仅在请求共享可复用前缀时有效。图像各异、视频各异或随机 prompt 可能只增加内存压力而没有可见收益。重复前缀工作负载可开启前缀缓存；随机压测或内存受限的视频工作负载请与关闭前缀缓存的配置对比。
 
